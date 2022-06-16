@@ -1,3 +1,23 @@
+//Creo la clase de objeto producto como base para cargar los datos del participante     
+class participante {
+    constructor(nombre, apellido) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        }
+    }
+
+    //Inicializo un array para cargar los participantes
+const listado = [];
+
+let entrada = prompt("Ingresar nombre jugador");
+let entrada2 = prompt("Ingresar apellido jugador");
+listado.push(new participante(entrada, entrada2));
+
+for (const participante of listado) {
+    alert("PRIMER TURNO JUGADOR: " + participante.nombre + "  " + participante.apellido);
+}
+
+
 function opcion1(){
     if (respuesta == "1"){
         alert("FELICITACIONES, SU RESPUESTA ES CORRECTA!");
@@ -43,7 +63,7 @@ function opcion1(){
         
         }
         }
-        
+
 let respuesta = prompt("Vehículo de transporte aéreo provisto de alas. Escriba el numero de la opcion correcta: \n1-AVION\n2-TRACTOR\n3-DRONE\n4-HELICOPTERO");
 
 opcion1();
