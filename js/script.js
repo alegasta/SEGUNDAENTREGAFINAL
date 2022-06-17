@@ -18,14 +18,14 @@ for (const participante of listado) {
 }
 
 
-function opcion1(pregunta){
+function opcion1(preg1){
     if (respuesta == "1"){
         alert("FELICITACIONES, SU RESPUESTA ES CORRECTA!");
     }
     else if (respuesta !== "1") {
         for (let i = 0; i < 2; i++){
             alert(`INCORRECTO, VUELVA INTENTAR, TE QUEDAN ${2-i} INTENTOS`);
-            let respuesta = prompt(pregunta);
+            let respuesta = prompt(preg1);
             if (respuesta == "1"){
                 alert("FELICITACIONES, SU RESPUESTA ES CORRECTA!");
                 break;
@@ -41,14 +41,14 @@ function opcion1(pregunta){
     }
     }
 
-    function opcion2(){
+    function opcion2(preg2){
         if (respuesta2 == "2"){
             alert("FELICITACIONES, SU RESPUESTA ES CORRECTA!");
         }
         else if (respuesta2 !== "2") {
             for (let i = 0; i < 2; i++){
                 alert(`INCORRECTO, VUELVA INTENTAR, TE QUEDAN ${2-i} INTENTOS`);
-                let respuesta2 = prompt("Vuelva a intentar. Escriba su respuesta: ");
+                let respuesta2 = prompt(preg2);
                 if (respuesta2 == "2"){
                     alert("FELICITACIONES, SU RESPUESTA ES CORRECTA!");
                     break;
@@ -69,8 +69,8 @@ let pregunta1 = "Vehículo de transporte aéreo provisto de alas. Escriba el num
 let respuesta = prompt(pregunta1);
 opcion1(pregunta1);
 
-let respuesta2 = prompt("Local donde los hombres se cortaban y arreglaban el pelo, la barba y el bigote: \n1-CERVECERIA\n2-BARBERIA\n3-FERRETERIA\n4-RELOJERIA");
-
-opcion2();
+let pregunta2 = "Local donde los hombres se cortaban y arreglaban el pelo, la barba y el bigote: \n1-CERVECERIA\n2-BARBERIA\n3-FERRETERIA\n4-RELOJERIA"
+let respuesta2 = prompt(pregunta2);
+opcion2(pregunta2);
 
 
