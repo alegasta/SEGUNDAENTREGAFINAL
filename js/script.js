@@ -64,9 +64,10 @@ function opcion1(pregunta){
         }
         }
 
-let respuesta = prompt("Vehículo de transporte aéreo provisto de alas. Escriba el numero de la opcion correcta: \n1-AVION\n2-TRACTOR\n3-DRONE\n4-HELICOPTERO");
 
-opcion1(pregunta);
+let pregunta1 = "Vehículo de transporte aéreo provisto de alas. Escriba el numero de la opcion correcta: \n1-AVION\n2-TRACTOR\n3-DRONE\n4-HELICOPTERO" 
+let respuesta = prompt(pregunta1);
+opcion1(pregunta1);
 
 let respuesta2 = prompt("Local donde los hombres se cortaban y arreglaban el pelo, la barba y el bigote: \n1-CERVECERIA\n2-BARBERIA\n3-FERRETERIA\n4-RELOJERIA");
 
