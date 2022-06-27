@@ -1,117 +1,156 @@
-//Creo la clase de objeto producto como base para cargar los datos del participante     
-class participante {
-    constructor(nombre, apellido, puntaje) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.puntaje = puntaje;
-        }
+let preguntas_aleatorias = true;
+let mostrar_pantalla_juego_términado = true;
+let reiniciar_puntos_al_reiniciar_el_juego = true;
+
+window.onload = function () {
+    preguntas = readText("preguntas.json");
+    interprete_bp = JSON.parse(preguntas);
+    eligePreguntaAleatoria();
+};
+
+let pregunta;
+let posibles_respuestas;
+btn_correspondiente = [
+    select_id("btn1"),
+    select_id("btn2"),
+    select_id("btn3"),
+    select_id("btn4")
+];
+let pregu = [];
+
+let preguntas_hechas = 0;
+let preguntas_correctas = 0;
+
+function eligePreguntaAleatoria() {
+    let n;
+    if (preguntas_aleatorias) {
+    n = Math.floor(Math.random() * interprete_bp.length);
+    } else {
+    n = 0;
     }
 
-    //Inicializo un array para cargar los participantes
-const listado = [];
-
-let playername = prompt("Ingresar nombre jugador N°1");
-let playerlastname = prompt("Ingresar apellido jugador N°1");
-let player2name = prompt("Ingresar nombre jugador N°2");
-let player2lastname = prompt("Ingresar apellido jugador N°2");
-let punt =0;
-let pun = 0;
-listado.push(new participante(playername, playerlastname, pun));
-listado.push(new participante(player2name, player2lastname, punt));
-
-for (const jugador of listado) {
-    alert("JUGADORES: " + jugador.nombre + "  " + jugador.apellido);
-}
-
-for (let i = 1; i < 3; i++){
-function opcion1(preg1){
+    while (pregu.includes(n)) {
+    n++;
+    if (n >= interprete_bp.length) {
+    n = 0;
+    }
+    if (pregu.length == interprete_bp.length) {
     
-    if (respuesta == "1"){
-        alert("FELICITACIONES, SU RESPUESTA ES CORRECTA!");
-        
-        return 1;
+    pregu = [];
     }
-    else if (respuesta !== "1") {
-        for (let i = 0; i < 2; i++){
-            alert(`INCORRECTO, VUELVA INTENTAR, TE QUEDAN ${2-i} INTENTOS`);
-            let respuesta = prompt(preg1);
-            if (respuesta == "1"){
-                alert("FELICITACIONES, SU RESPUESTA ES CORRECTA!");
-                
-                return 1;
-                break;
-            }
-            else if (respuesta !== "1"){
-                if(i==1){
-                    alert("AGOTO TODOS SUS INTENTOS");
-                }
-            }
-            
-    }
-    
-    }
-    
-    }
-
-    function opcion2(preg2){
-        
-        if (respuesta2 == "2"){
-            alert("FELICITACIONES, SU RESPUESTA ES CORRECTA!");
-            
-            return 1;
-        }
-        else if (respuesta2 !== "2") {
-            for (let i = 0; i < 2; i++){
-                alert(`INCORRECTO, VUELVA INTENTAR, TE QUEDAN ${2-i} INTENTOS`);
-                let respuesta2 = prompt(preg2);
-                if (respuesta2 == "2"){
-                    alert("FELICITACIONES, SU RESPUESTA ES CORRECTA!");
-                    
-                    return 1;
-                    break;
-                }
-                else if (respuesta2 !== "2"){
-                    if(i==1){
-                        alert("AGOTO TODOS SUS INTENTOS");
-                    }
-                }
-                
-        }
-        
-        }
-        }
-
-        
-let puntos = 0
-
-    alert(`TURNO JUGADOR N° ${i}`);
-let pregunta1 = "Vehículo de transporte aéreo provisto de alas. Escriba el numero de la opcion correcta: \n1-AVION\n2-TRACTOR\n3-DRONE\n4-HELICOPTERO" 
-let respuesta = prompt(pregunta1);
-puntos = opcion1(pregunta1);
-
-
-let pregunta2 = "Local donde los hombres se cortaban y arreglaban el pelo, la barba y el bigote: \n1-CERVECERIA\n2-BARBERIA\n3-FERRETERIA\n4-RELOJERIA"
-let respuesta2 = prompt(pregunta2);
-puntos = puntos + opcion2(pregunta2);
-alert ("SU PUNTAJE FUE DE: "+puntos);
-if (i === "1"){
-    pun = puntos;
 }
-else if (i === "2"){
-    punt = puntos;
+pregu.push(n);
+preguntas_hechas++;
+
+elegirPregunta(n);
 }
 
+function elegirPregunta(n) {
+    pregunta = interprete_bp[n];
+    select_id("categoria").innerHTML = pregunta.categoria;
+    select_id("pregunta").innerHTML = pregunta.pregunta;
+    select_id("numero").innerHTML = n;
+    let pc = preguntas_correctas;
+    if (preguntas_hechas > 1) {
+        select_id("puntaje").innerHTML = pc + "/" + (preguntas_hechas - 1);
+    } else {
+        select_id("puntaje").innerHTML = "";
+        }
+
+    style("imagen").objectFit = pregunta.objectFit;
+    desordenarRespuestas(pregunta);
+    if (pregunta.imagen) {
+        select_id("imagen").setAttribute("src", pregunta.imagen);
+        style("imagen").height = "200px";
+        style("imagen").width = "100%";
+        } else {
+            style("imagen").height = "0px";
+            style("imagen").width = "0px";
+            setTimeout(() => {
+            select_id("imagen").setAttribute("src", "");
+            }, 500);
 }
-for (const jugador of listado) {
-    alert("JUGADORES: " + jugador.nombre + "  " + jugador.apellido+ "  PUNTAJE: " +jugador.puntaje);
 }
 
-const total = listado. reduce((acc, el) => acc + el. apellido, 0)
-console. log(total) 
+function desordenarRespuestas(pregunta) {
+    posibles_respuestas = [
+    pregunta.respuesta,
+    pregunta.incorrecta1,
+    pregunta.incorrecta2,
+    pregunta.incorrecta3,
+    ];
+    posibles_respuestas.sort(() => Math.random() - 0.5);
+
+    select_id("btn1").innerHTML = posibles_respuestas[0];
+    select_id("btn2").innerHTML = posibles_respuestas[1];
+    select_id("btn3").innerHTML = posibles_respuestas[2];
+    select_id("btn4").innerHTML = posibles_respuestas[3];
+}
+let suspender_botones = false;
+
+//Declaracion de eventos para los botones de respuesta
+let boton1 = document.getElementById ( "btn1");
+boton1.onclick = () =>{console.log ( "Respuesta 1 ")};
+
+let boton2 = document.getElementById ( "btn2");
+boton2.onclick = () =>{console.log ( "Respuesta 2 ")};
+
+let boton3 = document.getElementById ( "btn3");
+boton3.onclick = () =>{console.log ( "Respuesta 3 ")};
+
+let boton4 = document.getElementById ( "btn4");
+boton4.onclick = () =>{console.log ( "Respuesta 4 ")};
 
 
-const players = listado. map((player) => player.nombre)
-console. log(players)
 
+function apretar_btn(i) {
+    if (suspender_botones) {
+    return;
+    }
+    suspender_botones = true;
+    if (posibles_respuestas[i] == pregunta.respuesta) {
+    preguntas_correctas++;
+    btn_correspondiente[i].style.background = "verde";
+    } else {
+        btn_correspondiente[i].style.background = "rosa";
+    }
+    for (let j = 0; j < 4; j++) {
+    if (posibles_respuestas[j] == pregunta.respuesta) {
+        btn_correspondiente[j].style.background = "verde";
+        break;
+    }
+}
+    setTimeout(() => {
+    reiniciar();
+    suspender_botones = false;
+    }, 3000);
+}
 
-//comentario
+// let p = prompt("numero")
+
+function reiniciar() {
+    for (const btn of btn_correspondiente) {
+    btn.style.background = "blanco";
+    }
+    eligePreguntaAleatoria();
+}
+
+function select_id(id) {
+    return document.getElementById(id);
+}
+
+function style(id) {
+    return select_id(id).style;
+}
+
+function readText(ruta_local) {
+    var texto = null;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", ruta_local, false);
+    xmlhttp.send();
+    if (xmlhttp.status == 200) {
+        texto = xmlhttp.responseText;
+}
+    return texto;
+}
+

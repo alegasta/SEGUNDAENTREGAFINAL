@@ -1,0 +1,21 @@
+[
+    {
+        "categoria": "General",
+        "pregunta": "Vehículo de transporte aéreo provisto de alas. Escriba el numero de la opcion correcta:",
+        "respuesta": "AVION",
+        "incorrecta1": "TRACTOR",
+        "incorrecta2": "DRONE",
+        "incorrecta3": "HELICOPTERO"
+        
+        
+    },
+    {
+        "categoria": "General",
+        "pregunta": "Local donde los hombres se cortaban y arreglaban el pelo, la barba y el bigote:\"",
+        "respuesta": "BARBERIA",
+        "incorrecta1": "CERVECERIA",
+        "incorrecta2": "FERRETERIA",
+        "incorrecta3": "RELOJERIA"
+        
+    }
+]
