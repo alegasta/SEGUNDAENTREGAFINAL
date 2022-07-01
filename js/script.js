@@ -24,18 +24,29 @@ let preguntas_correctas = 0;
 function eligePreguntaAleatoria() {
     let n;
     if (preguntas_aleatorias) {
-    n = Math.floor(Math.random() * interprete_bp.length);
+        n = Math.floor(Math.random() * interprete_bp.length);
     } else {
-    n = 0;
+        n = 0;
     }
 
     while (pregu.includes(n)) {
     n++;
     if (n >= interprete_bp.length) {
-    n = 0;
+        n = 0;
     }
     if (pregu.length == interprete_bp.length) {
-    
+    //Aca el juego se reinicia
+    if (mostrar_pantalla_juego_términado) {
+        swal.fire({
+            title: "Juego finalizado",
+            text: "Puntuación: " + preguntas_correctas + "/" + (preguntas_hechas - 1),
+            icon: "success"
+        });
+    }
+        if (reiniciar_puntos_al_reiniciar_el_juego) {
+            preguntas_correctas = 0
+            preguntas_hechas = 0
+        }
     pregu = [];
     }
 }
@@ -88,6 +99,34 @@ function desordenarRespuestas(pregunta) {
 }
 let suspender_botones = false;
 
+
+
+
+function apretar_btn(i) {
+    if (suspender_botones) {
+    return;
+    }
+    suspender_botones = true;
+    if (posibles_respuestas[i] == pregunta.respuesta) {
+        preguntas_correctas++;
+        btn_correspondiente[i].style.background = "lightgreen";
+    } else {
+        btn_correspondiente[i].style.background = "pink";
+    }
+    for (let j = 0; j < 4; j++) {
+    if (posibles_respuestas[j] == pregunta.respuesta) {
+        btn_correspondiente[j].style.background = "lightgreen";
+        break;
+    }
+}
+    setTimeout(() => {
+    reiniciar();
+    suspender_botones = false;
+    }, 3000);
+}
+
+// let p = prompt("numero")
+/*
 //Declaracion de eventos para los botones de respuesta
 let boton1 = document.getElementById ( "btn1");
 boton1.onclick = () =>{console.log ( "Respuesta 1 ")};
@@ -100,37 +139,11 @@ boton3.onclick = () =>{console.log ( "Respuesta 3 ")};
 
 let boton4 = document.getElementById ( "btn4");
 boton4.onclick = () =>{console.log ( "Respuesta 4 ")};
-
-
-
-function apretar_btn(i) {
-    if (suspender_botones) {
-    return;
-    }
-    suspender_botones = true;
-    if (posibles_respuestas[i] == pregunta.respuesta) {
-    preguntas_correctas++;
-    btn_correspondiente[i].style.background = "verde";
-    } else {
-        btn_correspondiente[i].style.background = "rosa";
-    }
-    for (let j = 0; j < 4; j++) {
-    if (posibles_respuestas[j] == pregunta.respuesta) {
-        btn_correspondiente[j].style.background = "verde";
-        break;
-    }
-}
-    setTimeout(() => {
-    reiniciar();
-    suspender_botones = false;
-    }, 3000);
-}
-
-// let p = prompt("numero")
+*/
 
 function reiniciar() {
     for (const btn of btn_correspondiente) {
-    btn.style.background = "blanco";
+    btn.style.background = "white";
     }
     eligePreguntaAleatoria();
 }
